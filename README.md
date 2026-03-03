@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Спиридонова Nails
 
-## Getting Started
+Сайт студии ногтевого сервиса **Спиридонова Nails** — маникюр, педикюр и дизайн ногтей в центре Москвы. Онлайн-запись, галерея работ, описание услуг и контакты.
 
-First, run the development server:
+## Стек
+
+- **Next.js 16** (App Router)
+- **React 19**, **TypeScript**
+- **Tailwind CSS 4**
+- **next-sitemap** — генерация sitemap после сборки
+
+## Запуск
 
 ```bash
+# установка зависимостей
+npm install
+
+# режим разработки (http://localhost:3000)
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+
+# сборка для production
+npm run build
+
+# запуск production-сервера
+npm start
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Дополнительно: `npm run lint` — проверка линтером.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Структура проекта
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- `src/app/` — страницы (главная, услуги, галерея) и layout
+- `src/components/` — компоненты (Hero, Header, Footer, блоки услуг и контактов)
+- `src/lib/` — данные салона, SEO-схемы (JSON-LD), утилиты
+- `src/types/` — типы TypeScript
+- `public/` — статика (изображения, favicon, manifest)
 
-## Learn More
+## Деплой
 
-To learn more about Next.js, take a look at the following resources:
+Сборка: `npm run build`. После сборки автоматически генерируется sitemap (`postbuild: next-sitemap`).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+Удобно деплоить на [Vercel](https://vercel.com) (Next.js) или любой хостинг с поддержкой Node.js.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Лицензия
 
-## Deploy on Vercel
+Приватный проект.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+---
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+## Первый пуш на удалённый репозиторий
+
+1. **Убрать из индекса Git папки IDE** (если они уже коммитились):
+   ```bash
+   git rm -r --cached .idea 2>/dev/null
+   git rm -r --cached .vscode 2>/dev/null
+   ```
+   В Git Bash и на Windows используйте `2>/dev/null`, иначе `2>nul` может создать файл `nul` в папке проекта.
+
+2. **Закоммитить изменения** (в т.ч. обновлённые `.gitignore` и `README.md`):
+   ```bash
+   git add .gitignore README.md
+   git add .
+   git status
+   git commit -m "chore: обновлён .gitignore и README, подготовка к пушу"
+   ```
+
+3. **Подключить удалённый репозиторий и отправить код**:
+   ```bash
+   git remote add origin https://github.com/ВАШ_ЛОГИН/spiridonova_nails_cursor.git
+   git branch -M main
+   git push -u origin main
+   ```
+   Или по SSH: `git@github.com:ВАШ_ЛОГИН/spiridonova_nails_cursor.git`. Имя репозитория замените на своё.

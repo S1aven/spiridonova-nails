@@ -92,3 +92,6 @@ export const getAllGallery = () => gallery;
 
 export const getGalleryByCategory = (category: string) =>
   category === 'all' ? gallery : gallery.filter(item => item.category === category);
+
+export const getGalleryItemById = (id: string) =>
+  gallery.find((item) => item.id === id) ?? null;

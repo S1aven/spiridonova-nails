@@ -20,9 +20,26 @@
 # production
 /build
 
+# IDE / editor
+.idea/
+.vscode/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
 # misc
 .DS_Store
+Thumbs.db
 *.pem
+# Windows reserved device names (e.g. created by 2>nul in shell)
+/nul
+/con
+/prn
+/aux
+/com1
+/lpt1
 
 # debug
 npm-debug.log*
@@ -32,6 +49,7 @@ yarn-error.log*
 
 # env files (can opt-in for committing if needed)
 .env*
+!.env.example
 
 # vercel
 .vercel

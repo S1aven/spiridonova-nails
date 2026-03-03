@@ -8,8 +8,8 @@ import { siteSettings } from '@/lib/data/site';
 
 const navigation = [
   { name: 'Главная', href: '/' },
-  { name: 'Услуги', href: '/#services' },
-  { name: 'Портфолио', href: '/#gallery' },
+  { name: 'Услуги', href: '/services' },
+  { name: 'Портфолио', href: '/gallery' },
   // { name: 'О мастере', href: '/#about' },
   { name: 'Контакты', href: '/#contacts' },
 ];
@@ -140,21 +140,24 @@ export default function Header() {
 
           {/* Десктопное меню */}
           <div className="hidden md:flex items-center space-x-8">
-            {navigation.map((item) => (
-              <a
-                key={item.name}
-                href={item.href}
-                onClick={(e) => handleNavigation(e, item.href)}
-                className={`font-medium transition-colors hover:text-pink-500 cursor-pointer ${
-                  isScrolled ? 'text-gray-700' : 'text-white'
-                } ${
-                  isActiveLink(item.href) ? 'text-pink-500' : ''
-                }`}
-                aria-current={isActiveLink(item.href) ? 'page' : undefined}
-              >
-                {item.name}
-              </a>
-            ))}
+            {navigation.map((item) => {
+              const hasHash = item.href.includes('#');
+              return (
+                <Link
+                  key={item.name}
+                  href={item.href}
+                  onClick={(e) => hasHash && handleNavigation(e, item.href)}
+                  className={`font-medium transition-colors hover:text-pink-500 cursor-pointer ${
+                    isScrolled ? 'text-gray-700' : 'text-white'
+                  } ${
+                    isActiveLink(item.href) ? 'text-pink-500' : ''
+                  }`}
+                  aria-current={isActiveLink(item.href) ? 'page' : undefined}
+                >
+                  {item.name}
+                </Link>
+              );
+            })}
           </div>
 
           {/* Кнопка записи и мобильное меню */}
@@ -214,22 +217,25 @@ export default function Header() {
         >
           <div className="flex flex-col h-full p-8 pt-8">
             <nav className="flex flex-col space-y-6" aria-label="Мобильная навигация">
-              {navigation.map((item) => (
-                <a
-                  key={item.name}
-                  href={item.href}
-                  onClick={(e) => {
-                    handleNavigation(e, item.href);
-                    setIsMenuOpen(false);
-                  }}
-                  className={`text-2xl font-semibold transition-colors hover:text-pink-500 ${
-                    isActiveLink(item.href) ? 'text-pink-500' : 'text-gray-800'
-                  }`}
-                  aria-current={isActiveLink(item.href) ? 'page' : undefined}
-                >
-                  {item.name}
-                </a>
-              ))}
+              {navigation.map((item) => {
+                const hasHash = item.href.includes('#');
+                return (
+                  <Link
+                    key={item.name}
+                    href={item.href}
+                    onClick={(e) => {
+                      if (hasHash) handleNavigation(e, item.href);
+                      setIsMenuOpen(false);
+                    }}
+                    className={`text-2xl font-semibold transition-colors hover:text-pink-500 ${
+                      isActiveLink(item.href) ? 'text-pink-500' : 'text-gray-800'
+                    }`}
+                    aria-current={isActiveLink(item.href) ? 'page' : undefined}
+                  >
+                    {item.name}
+                  </Link>
+                );
+              })}
             </nav>
 
             <div className="mt-auto pb-12">

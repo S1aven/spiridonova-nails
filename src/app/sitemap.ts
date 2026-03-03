@@ -5,13 +5,12 @@ import { getAllGallery } from '@/lib/data/gallery'
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const baseUrl = 'https://salon-spiridonova-nails.ru'
 
-  // Статические страницы
+  // Статические страницы (только существующие в app)
   const staticPages = [
     '',
     '/services',
     '/gallery',
-    '/about',
-    '/booking',
+    // '/about', '/booking' — добавить, когда будут созданы страницы
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),
@@ -28,7 +27,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     priority: 0.7,
   }))
 
-  // Страницы галереи (если будут отдельные)
+  // Страницы галереи (отдельная страница на каждую работу)
   const gallery = getAllGallery()
   const galleryPages = gallery.map((item) => ({
     url: `${baseUrl}/gallery/${item.id}`,

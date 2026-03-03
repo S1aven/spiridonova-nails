@@ -7,12 +7,13 @@ import JsonLd from '@/components/shared/JsonLd'
 import { getServiceSchema, getBreadcrumbSchema } from '@/lib/seo/schemas'
 
 interface Props {
-  params: { slug: string }
+  params: Promise<{ slug: string }>
 }
 
 // Генерация мета-тегов для каждой услуги
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  const service = getServiceBySlug(params.slug)
+  const { slug } = await params
+  const service = getServiceBySlug(slug)
 
   if (!service) {
     return {
@@ -49,7 +50,8 @@ export async function generateStaticParams() {
 }
 
 export default async function ServicePage({ params }: Props) {
-  const service = getServiceBySlug(params.slug)
+  const { slug } = await params
+  const service = getServiceBySlug(slug)
 
   if (!service) {
     notFound()
