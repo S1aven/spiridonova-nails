@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
+import Card from '@/components/ui/Card';
 import { getAllGallery } from '@/lib/data/gallery';
 import { siteSettings } from '@/lib/data/site';
 
@@ -11,15 +12,12 @@ export default function GalleryPreview() {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const gallery = getAllGallery();
 
-  // Получаем уникальные категории
   const categories = ['all', ...new Set(gallery.map(item => item.category))];
 
-  // Фильтруем изображения по категории
   const filteredGallery = selectedCategory === 'all'
-    ? gallery.slice(0, 6) // Показываем первые 6 для превью
+    ? gallery.slice(0, 6)
     : gallery.filter(item => item.category === selectedCategory).slice(0, 6);
 
-  // Названия категорий для отображения
   const categoryNames: Record<string, string> = {
     all: 'Все работы',
     'маникюр': 'Маникюр',
@@ -29,7 +27,6 @@ export default function GalleryPreview() {
 
   return (
     <section
-      id="gallery"
       className="py-20 bg-white"
       aria-labelledby="gallery-heading"
       itemScope
@@ -79,35 +76,36 @@ export default function GalleryPreview() {
           {filteredGallery.map((item, index) => (
             <figure
               key={item.id}
-              className="relative group overflow-hidden rounded-lg aspect-square cursor-pointer"
+              className="relative group overflow-hidden rounded-xl" // ← Добавлен rounded-xl и overflow-hidden
               itemProp="image"
               itemScope
               itemType="https://schema.org/ImageObject"
               onClick={() => {
-                // Здесь можно открыть модальное окно с увеличенным изображением
                 console.log('Open image:', item.id);
               }}
             >
-              {/* Изображение */}
-              <Image
-                src={item.imageUrl}
-                alt={item.title}
-                fill
-                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 16vw"
-                className="object-cover transition-transform duration-300 group-hover:scale-110"
-                itemProp="contentUrl"
-                loading={index < 4 ? 'eager' : 'lazy'}
-              />
+              {/* Карточка с изображением */}
+              <Card padding="none" className="aspect-square overflow-hidden">
+                <Image
+                  src={item.imageUrl}
+                  alt={item.title}
+                  fill
+                  sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 16vw"
+                  className="object-cover transition-transform duration-300 group-hover:scale-110"
+                  itemProp="contentUrl"
+                  loading={index < 4 ? 'eager' : 'lazy'}
+                />
+              </Card>
 
               {/* Оверлей при наведении */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
 
-              {/* Информация при наведении */}
-              <figcaption className="absolute bottom-0 left-0 right-0 p-3 text-white transform translate-y-full group-hover:translate-y-0 transition-transform duration-300">
+              {/* Информация при наведении - теперь внутри оверлея */}
+              <figcaption className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 opacity-0 group-hover:opacity-100">
                 <h3 className="text-sm font-semibold truncate" itemProp="name">
                   {item.title}
                 </h3>
-                <p className="text-xs text-gray-300 truncate" itemProp="description">
+                <p className="text-xs text-gray-200 truncate" itemProp="description">
                   {item.description || item.category}
                 </p>
               </figcaption>
@@ -136,14 +134,14 @@ export default function GalleryPreview() {
         </div>
       </div>
 
-      {/* Микроразметка для галереи */}
+      {/* Микроразметка */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{
           __html: JSON.stringify({
             '@context': 'https://schema.org',
             '@type': 'ImageGallery',
-            name: 'Портфолио салона красоты Спиридонова Nails',
+            name: 'Портфолио салона красоты Марии',
             description: 'Примеры наших работ: маникюр, педикюр и дизайн ногтей',
             url: `${siteSettings.url}/gallery`,
             image: filteredGallery.map(item => ({

@@ -1,7 +1,7 @@
-// components/home/ServicesPreview.tsx
 import Link from 'next/link';
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
+import Card from '@/components/ui/Card';
 import { getAllServices } from '@/lib/data/services';
 import { siteSettings } from '@/lib/data/site';
 
@@ -92,120 +92,129 @@ export default function ServicesPreview() {
           </div>
         </div>
 
-        {/* Сетка услуг */}
+        {/* Сетка услуг с Card */}
         <div
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12"
           itemProp="itemListElement"
           itemScope
           itemType="https://schema.org/ItemList"
         >
-          {previewServices.map((service, index) => (
+          {previewServices.map((service) => (
             <article
               key={service.id}
-              className="bg-white rounded-xl shadow-md hover:shadow-xl transition-shadow duration-300 overflow-hidden group"
+              className="group h-full"
               itemProp="itemListElement"
               itemScope
               itemType="https://schema.org/Product"
             >
               <Link
                 href={`/services/${service.slug}`}
-                className="block"
+                className="block h-full"
                 itemProp="url"
               >
-                {/* Изображение услуги */}
-                <div className="relative h-48 overflow-hidden">
-                  {service.image ? (
-                    <Image
-                      src={service.image}
-                      alt={service.name}
-                      fill
-                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
-                      className="object-cover group-hover:scale-110 transition-transform duration-300"
-                      itemProp="image"
-                    />
-                  ) : (
-                    <div className="w-full h-full bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center">
-                      <span className="text-4xl">
-                        {categoryIcons[service.category]}
-                      </span>
-                    </div>
-                  )}
+                <Card
+                  hover
+                  shadow="md"
+                  className="overflow-hidden h-full flex flex-col"
+                >
+                  {/* Изображение услуги */}
+                  <div className="relative h-48 overflow-hidden flex-shrink-0">
+                    {service.image ? (
+                      <Image
+                        src={service.image}
+                        alt={service.name}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                        className="object-cover transition-transform duration-300 group-hover:scale-110"
+                        itemProp="image"
+                      />
+                    ) : (
+                      <div className="w-full h-full bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center">
+                        <span className="text-4xl">
+                          {categoryIcons[service.category as keyof typeof categoryIcons]}
+                        </span>
+                      </div>
+                    )}
 
-                  {/* Бейдж "Популярное" */}
-                  {service.isPopular && (
-                    <div className="absolute top-3 left-3 bg-pink-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                      Популярное 🔥
-                    </div>
-                  )}
+                    {/* Бейдж "Популярное" */}
+                    {service.isPopular && (
+                      <div className="absolute top-3 left-3 bg-pink-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                        Популярное 🔥
+                      </div>
+                    )}
 
-                  {/* Категория */}
-                  <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium text-gray-700">
-                    {categoryNames[service.category]}
+                    {/* Категория */}
+                    <div className="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm px-2 py-1 rounded-full text-xs font-medium text-gray-700">
+                      {categoryNames[service.category as keyof typeof categoryNames]}
+                    </div>
                   </div>
-                </div>
 
-                {/* Информация об услуге */}
-                <div className="p-5">
-                  <h3
-                    className="text-lg font-semibold mb-2 group-hover:text-pink-500 transition-colors"
-                    itemProp="name"
-                  >
-                    {service.name}
-                  </h3>
+                  {/* Информация об услуге */}
+                  <div className="flex flex-col flex-grow">
+                    <h3
+                      className="text-lg font-semibold mb-2 group-hover:text-pink-500 transition-colors"
+                      itemProp="name"
+                    >
+                      {service.name}
+                    </h3>
 
-                  <p
-                    className="text-gray-600 text-sm mb-3 line-clamp-2"
-                    itemProp="description"
-                  >
-                    {service.description}
-                  </p>
+                    <p
+                      className="text-gray-600 text-sm mb-3 line-clamp-2"
+                      itemProp="description"
+                    >
+                      {service.description}
+                    </p>
 
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-baseline gap-2">
-                      <span
-                        className="text-xl font-bold text-gray-900"
-                        itemProp="offers"
-                        itemScope
-                        itemType="https://schema.org/Offer"
-                      >
-                        <span itemProp="price" content={service.price.toString()}>
-                          {service.price} ₽
+                    {/* Контейнер для цены и характеристик - всегда внизу */}
+                    <div className="mt-auto">
+                      <div className="flex items-center justify-between mb-2">
+                        <div className="flex items-baseline gap-2">
+                          <span
+                            className="text-xl font-bold text-gray-900"
+                            itemProp="offers"
+                            itemScope
+                            itemType="https://schema.org/Offer"
+                          >
+                            <span itemProp="price" content={service.price.toString()}>
+                              {service.price} ₽
+                            </span>
+                            <meta itemProp="priceCurrency" content={siteSettings.currency} />
+                          </span>
+                          {service.oldPrice && (
+                            <span className="text-sm text-gray-400 line-through">
+                              {service.oldPrice} ₽
+                            </span>
+                          )}
+                        </div>
+
+                        <span className="text-sm text-gray-500">
+                          {service.duration} мин
                         </span>
-                        <meta itemProp="priceCurrency" content={siteSettings.currency} />
-                      </span>
-                      {service.oldPrice && (
-                        <span className="text-sm text-gray-400 line-through">
-                          {service.oldPrice} ₽
-                        </span>
+                      </div>
+
+                      {/* Характеристики (первые 2) */}
+                      {service.features && service.features.length > 0 && (
+                        <div className="pt-3 border-t border-gray-100">
+                          <div className="flex flex-wrap gap-2">
+                            {service.features.slice(0, 2).map((feature, i) => (
+                              <span
+                                key={i}
+                                className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full"
+                              >
+                                {feature}
+                              </span>
+                            ))}
+                            {service.features.length > 2 && (
+                              <span className="text-xs text-gray-400">
+                                +{service.features.length - 2}
+                              </span>
+                            )}
+                          </div>
+                        </div>
                       )}
                     </div>
-
-                    <span className="text-sm text-gray-500">
-                      {service.duration} мин
-                    </span>
                   </div>
-
-                  {/* Характеристики (первые 2) */}
-                  {service.features && service.features.length > 0 && (
-                    <div className="mt-3 pt-3 border-t border-gray-100">
-                      <div className="flex flex-wrap gap-2">
-                        {service.features.slice(0, 2).map((feature, i) => (
-                          <span
-                            key={i}
-                            className="text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded-full"
-                          >
-                            {feature}
-                          </span>
-                        ))}
-                        {service.features.length > 2 && (
-                          <span className="text-xs text-gray-400">
-                            +{service.features.length - 2}
-                          </span>
-                        )}
-                      </div>
-                    </div>
-                  )}
-                </div>
+                </Card>
               </Link>
             </article>
           ))}
