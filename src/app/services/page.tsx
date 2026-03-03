@@ -1,20 +1,9 @@
-import type { Metadata } from 'next'
 import Link from 'next/link'
 import { getAllServices } from '@/lib/data/services'
 import { siteSettings } from '@/lib/data/site'
 import JsonLd from '@/components/shared/JsonLd'
 import { getBreadcrumbSchema } from '@/lib/seo/schemas'
 import ServicesList from '@/components/services/ServicesList'
-
-export const metadata: Metadata = {
-  title: 'Все услуги | Маникюр, педикюр, дизайн | Салон Спиридонова Nails',
-  description: 'Полный список услуг салона красоты Спиридонова Nails: классический и аппаратный маникюр, педикюр, наращивание, дизайн ногтей. Цены от 500 до 3500 ₽. Онлайн-запись.',
-  openGraph: {
-    title: 'Услуги салона красоты Спиридонова Nails',
-    description: 'Все услуги с ценами и описанием. Записывайтесь онлайн!',
-    url: `${siteSettings.url}/services`,
-  },
-}
 
 export default function ServicesPage() {
   const services = getAllServices()

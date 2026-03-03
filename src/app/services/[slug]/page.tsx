@@ -10,7 +10,6 @@ interface Props {
   params: Promise<{ slug: string }>
 }
 
-// Генерация мета-тегов для каждой услуги
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const service = getServiceBySlug(slug)
@@ -41,7 +40,6 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 }
 
-// Статическая генерация всех страниц услуг
 export async function generateStaticParams() {
   const services = getAllServices()
   return services.map((service) => ({

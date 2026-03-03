@@ -10,7 +10,8 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '',
     '/services',
     '/gallery',
-    // '/about', '/booking' — добавить, когда будут созданы страницы
+    '/about',
+    // '/booking' — добавить, когда будет создана страница
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),

@@ -10,7 +10,7 @@ const navigation = [
   { name: 'Главная', href: '/' },
   { name: 'Услуги', href: '/services' },
   { name: 'Портфолио', href: '/gallery' },
-  // { name: 'О мастере', href: '/#about' },
+  { name: 'О мастере', href: '/about' },
   { name: 'Контакты', href: '/#contacts' },
 ];
 
