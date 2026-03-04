@@ -64,7 +64,6 @@ export async function POST(request: Request) {
           body: JSON.stringify({
             chat_id: TELEGRAM_CHAT_ID,
             text: message,
-            parse_mode: 'HTML',
           }),
         });
         console.log('✅ Telegram notification sent');

@@ -4,7 +4,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: 'Салон красоты Spiridonova Nails',
     short_name: 'Салон Spiridonova Nails',
-    description: 'Профессиональный маникюр и педикюр в Перово',
+    description: 'Профессиональный маникюр и педикюр в центре Москвы',
     start_url: '/',
     display: 'standalone',
     background_color: '#ffffff',

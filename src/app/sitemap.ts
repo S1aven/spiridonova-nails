@@ -11,7 +11,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     '/services',
     '/gallery',
     '/about',
-    // '/booking' — добавить, когда будет создана страница
+    '/booking',
   ].map((route) => ({
     url: `${baseUrl}${route}`,
     lastModified: new Date(),

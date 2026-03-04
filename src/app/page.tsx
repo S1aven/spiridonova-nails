@@ -31,6 +31,7 @@ export default function HomePage() {
       <Hero />
       <ServicesPreview />
       <GalleryPreview />
+      {/* BookingWidget отключён: онлайн-запись пока не нужна; включить при необходимости */}
       {/*<BookingWidget />*/}
       <Contacts />
     </>

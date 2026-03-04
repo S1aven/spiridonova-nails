@@ -58,10 +58,11 @@ export const metadata: Metadata = {
     apple: '/apple-touch-icon.png',
   },
 
-  verification: {
-    yandex: 'ваш-код-верификации',
-    google: 'ваш-код-верификации',
-  },
+  // Раскомментировать, когда появятся коды верификации из Яндекс.Вебмастер и Google Search Console:
+  // verification: {
+  //   yandex: 'ваш-код-верификации',
+  //   google: 'ваш-код-верификации',
+  // },
 
   alternates: {
     canonical: 'https://salon-spiridonova-nails.ru',
