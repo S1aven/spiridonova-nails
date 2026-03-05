@@ -117,11 +117,10 @@ export default function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled || isMenuOpen
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${isScrolled || isMenuOpen
           ? 'bg-white/95 backdrop-blur-md shadow-lg py-2'
           : 'bg-transparent py-4'
-      }`}
+        }`}
     >
       <nav className="container mx-auto px-4" aria-label="Главная навигация">
         <div className="flex items-center justify-between">
@@ -134,9 +133,8 @@ export default function Header() {
             <div className="relative w-10 h-10 bg-pink-500 rounded-full flex items-center justify-center text-white font-bold text-xl">
               M
             </div>
-            <span className={`font-bold text-xl hidden sm:block ${
-              useDarkText ? 'text-gray-800' : 'text-white'
-            }`}>
+            <span className={`font-bold text-xl hidden sm:block ${useDarkText ? 'text-gray-800' : 'text-white'
+              }`}>
               {siteSettings.shortName}
             </span>
           </Link>
@@ -150,11 +148,9 @@ export default function Header() {
                   key={item.name}
                   href={item.href}
                   onClick={(e) => hasHash && handleNavigation(e, item.href)}
-                  className={`font-medium transition-colors hover:text-pink-500 cursor-pointer ${
-                    useDarkText ? 'text-gray-700' : 'text-white'
-                  } ${
-                    isActiveLink(item.href) ? 'text-pink-500' : ''
-                  }`}
+                  className={`font-medium transition-colors hover:text-pink-500 cursor-pointer ${useDarkText ? 'text-gray-700' : 'text-white'
+                    } ${isActiveLink(item.href) ? 'text-pink-500' : ''
+                    }`}
                   aria-current={isActiveLink(item.href) ? 'page' : undefined}
                 >
                   {item.name}
@@ -181,30 +177,24 @@ export default function Header() {
               aria-label={isMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
             >
               <div className="relative w-6 h-5">
-<span
-                className={`absolute left-0 block w-6 h-0.5 transition-all duration-300 ${
-                    useDarkText ? 'bg-gray-800' : 'bg-white'
-                  } ${
-                    isMenuOpen
+                <span
+                  className={`absolute left-0 block w-6 h-0.5 transition-all duration-300 ${useDarkText ? 'bg-gray-800' : 'bg-white'
+                    } ${isMenuOpen
                       ? 'top-2 rotate-45'
                       : 'top-0'
-                  }`}
+                    }`}
                 />
                 <span
-                  className={`absolute left-0 top-2 block w-6 h-0.5 transition-all duration-300 ${
-                    useDarkText ? 'bg-gray-800' : 'bg-white'
-                  } ${
-                    isMenuOpen ? 'opacity-0' : 'opacity-100'
-                  }`}
+                  className={`absolute left-0 top-2 block w-6 h-0.5 transition-all duration-300 ${useDarkText ? 'bg-gray-800' : 'bg-white'
+                    } ${isMenuOpen ? 'opacity-0' : 'opacity-100'
+                    }`}
                 />
                 <span
-                  className={`absolute left-0 block w-6 h-0.5 transition-all duration-300 ${
-                    useDarkText ? 'bg-gray-800' : 'bg-white'
-                  } ${
-                    isMenuOpen
+                  className={`absolute left-0 block w-6 h-0.5 transition-all duration-300 ${useDarkText ? 'bg-gray-800' : 'bg-white'
+                    } ${isMenuOpen
                       ? 'top-2 -rotate-45'
                       : 'top-4'
-                  }`}
+                    }`}
                 />
               </div>
             </button>
@@ -213,9 +203,8 @@ export default function Header() {
 
         {/* Мобильное меню */}
         <div
-          className={`fixed inset-0 bg-white z-0 transition-transform duration-300 md:hidden ${
-            isMenuOpen ? 'translate-x-0' : 'translate-x-full'
-          }`}
+          className={`fixed inset-0 bg-white z-0 transition-transform duration-300 md:hidden ${isMenuOpen ? 'translate-x-0' : 'translate-x-full'
+            }`}
           style={{ top: '64px' }}
         >
           <div className="flex flex-col h-full p-8 pt-8">
@@ -230,9 +219,8 @@ export default function Header() {
                       if (hasHash) handleNavigation(e, item.href);
                       setIsMenuOpen(false);
                     }}
-                    className={`text-2xl font-semibold transition-colors hover:text-pink-500 ${
-                      isActiveLink(item.href) ? 'text-pink-500' : 'text-gray-800'
-                    }`}
+                    className={`text-2xl font-semibold transition-colors hover:text-pink-500 ${isActiveLink(item.href) ? 'text-pink-500' : 'text-gray-800'
+                      }`}
                     aria-current={isActiveLink(item.href) ? 'page' : undefined}
                   >
                     {item.name}
