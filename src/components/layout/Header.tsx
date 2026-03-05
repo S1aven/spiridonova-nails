@@ -112,6 +112,9 @@ export default function Header() {
     return false;
   };
 
+  // Тёмный текст/иконки: при скролле или на любой странице кроме главной (под хедером светлый фон)
+  const useDarkText = isScrolled || pathname !== '/';
+
   return (
     <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
@@ -132,7 +135,7 @@ export default function Header() {
               M
             </div>
             <span className={`font-bold text-xl hidden sm:block ${
-              isScrolled ? 'text-gray-800' : 'text-white'
+              useDarkText ? 'text-gray-800' : 'text-white'
             }`}>
               {siteSettings.shortName}
             </span>
@@ -148,7 +151,7 @@ export default function Header() {
                   href={item.href}
                   onClick={(e) => hasHash && handleNavigation(e, item.href)}
                   className={`font-medium transition-colors hover:text-pink-500 cursor-pointer ${
-                    isScrolled ? 'text-gray-700' : 'text-white'
+                    useDarkText ? 'text-gray-700' : 'text-white'
                   } ${
                     isActiveLink(item.href) ? 'text-pink-500' : ''
                   }`}
@@ -178,9 +181,9 @@ export default function Header() {
               aria-label={isMenuOpen ? 'Закрыть меню' : 'Открыть меню'}
             >
               <div className="relative w-6 h-5">
-                <span
-                  className={`absolute left-0 block w-6 h-0.5 transition-all duration-300 ${
-                    isScrolled ? 'bg-gray-800' : 'bg-white'
+<span
+                className={`absolute left-0 block w-6 h-0.5 transition-all duration-300 ${
+                    useDarkText ? 'bg-gray-800' : 'bg-white'
                   } ${
                     isMenuOpen
                       ? 'top-2 rotate-45'
@@ -189,14 +192,14 @@ export default function Header() {
                 />
                 <span
                   className={`absolute left-0 top-2 block w-6 h-0.5 transition-all duration-300 ${
-                    isScrolled ? 'bg-gray-800' : 'bg-white'
+                    useDarkText ? 'bg-gray-800' : 'bg-white'
                   } ${
                     isMenuOpen ? 'opacity-0' : 'opacity-100'
                   }`}
                 />
                 <span
                   className={`absolute left-0 block w-6 h-0.5 transition-all duration-300 ${
-                    isScrolled ? 'bg-gray-800' : 'bg-white'
+                    useDarkText ? 'bg-gray-800' : 'bg-white'
                   } ${
                     isMenuOpen
                       ? 'top-2 -rotate-45'
