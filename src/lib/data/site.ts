@@ -12,7 +12,7 @@ export const siteSettings: SiteSettings = {
 export const contactInfo: ContactInfo = {
   phone: '+7 (900) 123-45-67',
   phoneFormatted: '+79001234567',
-  telegram: '@spiridonova_nails',
+  telegram: '@spiridonovalove',
   whatsapp: '+79001234567',
   address: 'ул. Пушкина, д. 10, Москва',
   addressFull: 'Москва, ул. Пушкина, д. 10, подъезд 2, этаж 3',
