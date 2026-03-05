@@ -16,11 +16,6 @@ const navigation = {
     { name: 'Наращивание ногтей', href: '/services/narashchivanie-nogtej' },
     { name: 'Дизайн ногтей', href: '/services/dizajn-nogtej' },
   ],
-  info: [
-    { name: 'Политика конфиденциальности', href: '/privacy' },
-    { name: 'Договор оферты', href: '/offer' },
-    { name: 'Вопросы и ответы', href: '/faq' },
-  ],
 };
 
 const socialLinks = [
@@ -171,20 +166,15 @@ export default function Footer() {
         {/* Нижняя часть футера */}
         <div className="mt-12 pt-8 border-t border-gray-800">
           <div className="flex flex-col md:flex-row justify-between items-center space-y-4 md:space-y-0">
-            <p className="text-gray-400 text-sm text-center md:text-left">
-              © {currentYear} {siteSettings.name}. Все права защищены.
-            </p>
+            <div className="text-gray-400 text-sm text-center md:text-left">
+              <p>© {currentYear} {siteSettings.name}.</p>
+              <p>Все права защищены.</p>
+            </div>
 
             <div className="flex space-x-6">
-              {navigation.info.map((item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  className="text-sm text-gray-400 hover:text-pink-500 transition-colors duration-200"
-                >
-                  {item.name}
-                </Link>
-              ))}
+              <span className="text-sm text-gray-500 cursor-default" aria-disabled="true">
+                Вопросы и ответы
+              </span>
             </div>
 
             {/* Счетчики и кнопки-соцсети (можно добавить позже) */}
