@@ -2,8 +2,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
-import { getAllServices } from '@/lib/data/services';
 import { siteSettings } from '@/lib/data/site';
+import type { Service } from '@/types';
 
 // Иконки для категорий (можно заменить на SVG)
 const categoryIcons = {
@@ -18,8 +18,11 @@ const categoryNames = {
   other: 'Дизайн',
 };
 
-export default function ServicesPreview() {
-  const services = getAllServices();
+interface ServicesPreviewProps {
+  services: Service[];
+}
+
+export default function ServicesPreview({ services }: ServicesPreviewProps) {
 
   // Берем только популярные услуги для превью (первые 3-4)
   const popularServices = services
@@ -127,6 +130,7 @@ export default function ServicesPreview() {
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                         className="object-cover transition-transform duration-300 group-hover:scale-110"
                         itemProp="image"
+                        unoptimized={service.image.startsWith('http')}
                       />
                     ) : (
                       <div className="w-full h-full bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center">
@@ -255,7 +259,7 @@ export default function ServicesPreview() {
                 '@type': 'Product',
                 name: service.name,
                 description: service.description,
-                image: `${siteSettings.url}${service.image}`,
+                image: service.image ? (service.image.startsWith('http') ? service.image : `${siteSettings.url}${service.image}`) : undefined,
                 offers: {
                   '@type': 'Offer',
                   price: service.price,

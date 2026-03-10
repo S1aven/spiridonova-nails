@@ -69,6 +69,7 @@ export default function ServiceDetail({ service }: ServiceDetailProps) {
                     className="object-cover"
                     itemProp="image"
                     priority
+                    unoptimized={service.image?.startsWith('http')}
                   />
                 ) : (
                   <div className="w-full h-full bg-gradient-to-br from-pink-100 to-purple-100 flex items-center justify-center text-5xl">

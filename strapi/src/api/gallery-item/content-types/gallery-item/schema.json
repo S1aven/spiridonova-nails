@@ -1,0 +1,40 @@
+{
+  "kind": "collectionType",
+  "collectionName": "gallery_items",
+  "info": {
+    "singularName": "gallery-item",
+    "pluralName": "gallery-items",
+    "displayName": "Элемент галереи",
+    "description": "Фото (и позже видео) работ для портфолио"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "title": {
+      "type": "string",
+      "required": true
+    },
+    "category": {
+      "type": "string",
+      "required": true,
+      "description": "маникюр, педикюр, дизайн и т.д."
+    },
+    "description": {
+      "type": "text"
+    },
+    "media": {
+      "type": "media",
+      "multiple": false,
+      "required": true,
+      "allowedTypes": ["images", "videos"],
+      "description": "Фото сейчас; позже можно добавить видео"
+    },
+    "order": {
+      "type": "integer",
+      "default": 0,
+      "description": "Порядок сортировки"
+    }
+  }
+}

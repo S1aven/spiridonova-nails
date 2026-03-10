@@ -5,10 +5,10 @@ import { useForm } from 'react-hook-form';
 import Link from 'next/link';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
-import { getAllServices } from '@/lib/data/services';
 import { contactInfo } from '@/lib/data/site';
 import { format, addDays } from 'date-fns';
 import { ru } from 'date-fns/locale';
+import type { Service } from '@/types';
 
 interface BookingFormData {
   service: string;
@@ -35,12 +35,15 @@ const generateAvailableDates = () => {
   return dates;
 };
 
-export default function BookingWidget() {
+interface BookingWidgetProps {
+  services: Service[];
+}
+
+export default function BookingWidget({ services }: BookingWidgetProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
-  const [error, setError] = useState<string | null>(null); // ← Добавлено состояние для ошибки
+  const [error, setError] = useState<string | null>(null);
 
-  const services = getAllServices();
   const availableDates = generateAvailableDates();
 
   const {

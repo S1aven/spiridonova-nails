@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getAllServices } from '@/lib/data/services';
+import { getServices } from '@/lib/data/services';
 
 export async function POST(request: Request) {
   try {
@@ -9,7 +9,7 @@ export async function POST(request: Request) {
     // Валидация с русскими сообщениями для пользователя
     if (!service || !date || !time || !name || !phone) {
       return NextResponse.json(
-        { error: 'Заполните все обязательные поля' }, // ← Изменено на русский
+        { error: 'Заполните все обязательные поля' },
         { status: 400 }
       );
     }
@@ -31,7 +31,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const services = getAllServices();
+    const services = await getServices();
     const selectedService = services.find(s => s.id === service);
 
     if (!selectedService) {

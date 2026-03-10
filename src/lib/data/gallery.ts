@@ -1,5 +1,8 @@
 // lib/data/gallery.ts
 import { GalleryItem } from '@/types';
+import { isStrapiEnabled, fetchStrapi, getStrapiUrl } from '@/lib/strapi/client';
+import type { StrapiGalleryResponse } from '@/lib/strapi/map-gallery';
+import { mapStrapiGalleryToItem } from '@/lib/strapi/map-gallery';
 
 export const gallery: GalleryItem[] = [
   {
@@ -95,3 +98,35 @@ export const getGalleryByCategory = (category: string) =>
 
 export const getGalleryItemById = (id: string) =>
   gallery.find((item) => item.id === id) ?? null;
+
+/** Данные из Strapi или статика. Использовать в Server Components. */
+export async function getGallery(): Promise<GalleryItem[]> {
+  if (!isStrapiEnabled()) return gallery;
+  try {
+    const res = await fetchStrapi<StrapiGalleryResponse>('api/gallery-items', {
+      populate: 'media',
+      publicationState: 'live',
+      sort: 'order:asc',
+    });
+    const baseUrl = getStrapiUrl();
+    return (res.data ?? []).map((doc) => mapStrapiGalleryToItem(doc, baseUrl));
+  } catch {
+    return gallery;
+  }
+}
+
+/** Один элемент галереи по id из Strapi или статики. */
+export async function getGalleryItemByIdAsync(id: string): Promise<GalleryItem | null> {
+  if (!isStrapiEnabled()) return getGalleryItemById(id);
+  try {
+    const res = await fetchStrapi<{ data: StrapiGalleryResponse['data'][0] }>(`api/gallery-items/${id}`, {
+      populate: 'media',
+      publicationState: 'live',
+    });
+    const doc = (res as { data?: StrapiGalleryResponse['data'][0] }).data;
+    if (!doc) return getGalleryItemById(id);
+    return mapStrapiGalleryToItem(doc, getStrapiUrl());
+  } catch {
+    return getGalleryItemById(id);
+  }
+}

@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { getAllServices, getServiceBySlug } from '@/lib/data/services'
+import { getServices, getServiceBySlugAsync } from '@/lib/data/services'
 import { siteSettings } from '@/lib/data/site'
 import ServiceDetail from '@/components/services/ServiceDetail'
 import JsonLd from '@/components/shared/JsonLd'
@@ -12,7 +12,7 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
-  const service = getServiceBySlug(slug)
+  const service = await getServiceBySlugAsync(slug)
 
   if (!service) {
     return {
@@ -28,7 +28,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: service.seoDescription || service.description,
       url: `${siteSettings.url}/services/${service.slug}`,
       images: service.image ? [{
-        url: service.image,
+        url: service.image.startsWith('http') ? service.image : `${siteSettings.url}${service.image}`,
         width: 800,
         height: 600,
         alt: service.name,
@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const services = getAllServices()
+  const services = await getServices()
   return services.map((service) => ({
     slug: service.slug,
   }))
@@ -49,7 +49,7 @@ export async function generateStaticParams() {
 
 export default async function ServicePage({ params }: Props) {
   const { slug } = await params
-  const service = getServiceBySlug(slug)
+  const service = await getServiceBySlugAsync(slug)
 
   if (!service) {
     notFound()

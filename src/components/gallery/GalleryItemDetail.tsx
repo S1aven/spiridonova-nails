@@ -64,6 +64,7 @@ export default function GalleryItemDetail({ item }: GalleryItemDetailProps) {
                   className="object-cover"
                   itemProp="contentUrl"
                   priority
+                  unoptimized={item.imageUrl.startsWith('http')}
                 />
               </Card>
             </div>

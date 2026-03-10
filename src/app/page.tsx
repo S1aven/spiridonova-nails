@@ -7,6 +7,8 @@ import Contacts from '@/components/home/Contacts'
 import JsonLd from '@/components/shared/JsonLd'
 import { getSalonSchema, getBreadcrumbSchema } from '@/lib/seo/schemas'
 import { siteSettings } from '@/lib/data/site'
+import { getServices } from '@/lib/data/services'
+import { getGallery } from '@/lib/data/gallery'
 
 export const metadata: Metadata = {
   title: 'Студия Спиридонова Nails | Маникюр и педикюр с онлайн-записью',
@@ -18,7 +20,8 @@ export const metadata: Metadata = {
   },
 }
 
-export default function HomePage() {
+export default async function HomePage() {
+  const [services, gallery] = await Promise.all([getServices(), getGallery()])
   const breadcrumbs = [
     { name: 'Главная', url: '/' }
   ]
@@ -29,10 +32,10 @@ export default function HomePage() {
       <JsonLd data={getBreadcrumbSchema(breadcrumbs)} />
 
       <Hero />
-      <ServicesPreview />
-      <GalleryPreview />
+      <ServicesPreview services={services} />
+      <GalleryPreview gallery={gallery} />
       {/* BookingWidget отключён: онлайн-запись пока не нужна; включить при необходимости */}
-      {/*<BookingWidget />*/}
+      {/*<BookingWidget services={services} />*/}
       <Contacts />
     </>
   )

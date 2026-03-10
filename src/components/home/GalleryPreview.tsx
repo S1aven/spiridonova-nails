@@ -5,13 +5,16 @@ import Link from 'next/link';
 import Image from 'next/image';
 import Button from '@/components/ui/Button';
 import Card from '@/components/ui/Card';
-import { getAllGallery } from '@/lib/data/gallery';
 import { siteSettings } from '@/lib/data/site';
+import type { GalleryItem } from '@/types';
 
-export default function GalleryPreview() {
+interface GalleryPreviewProps {
+  gallery: GalleryItem[];
+}
+
+export default function GalleryPreview({ gallery }: GalleryPreviewProps) {
+
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
-  const gallery = getAllGallery();
-
   const categories = ['all', ...new Set(gallery.map(item => item.category))];
 
   const filteredGallery = selectedCategory === 'all'
@@ -94,6 +97,7 @@ export default function GalleryPreview() {
                   className="object-cover transition-transform duration-300 group-hover:scale-110"
                   itemProp="contentUrl"
                   loading={index < 4 ? 'eager' : 'lazy'}
+                  unoptimized={item.imageUrl.startsWith('http')}
                 />
               </Card>
 
@@ -146,7 +150,7 @@ export default function GalleryPreview() {
             url: `${siteSettings.url}/gallery`,
             image: filteredGallery.map(item => ({
               '@type': 'ImageObject',
-              contentUrl: `${siteSettings.url}${item.imageUrl}`,
+              contentUrl: item.imageUrl.startsWith('http') ? item.imageUrl : `${siteSettings.url}${item.imageUrl}`,
               name: item.title,
               description: item.description || item.category,
             })),

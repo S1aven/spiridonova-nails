@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import { getAllGallery, getGalleryItemById } from '@/lib/data/gallery'
+import { getGallery, getGalleryItemByIdAsync } from '@/lib/data/gallery'
 import { siteSettings } from '@/lib/data/site'
 import JsonLd from '@/components/shared/JsonLd'
 import { getBreadcrumbSchema } from '@/lib/seo/schemas'
@@ -18,13 +18,15 @@ interface Props {
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { id } = await params
-  const item = getGalleryItemById(id)
+  const item = await getGalleryItemByIdAsync(id)
 
   if (!item) {
     return {
       title: 'Работа не найдена',
     }
   }
+
+  const imageUrl = item.imageUrl.startsWith('http') ? item.imageUrl : `${siteSettings.url}${item.imageUrl}`
 
   return {
     title: `${item.title} | Портфолио | Салон Спиридонова Nails`,
@@ -34,7 +36,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
       description: item.description || item.title,
       url: `${siteSettings.url}/gallery/${item.id}`,
       images: [{
-        url: `${siteSettings.url}${item.imageUrl}`,
+        url: imageUrl,
         width: 800,
         height: 800,
         alt: item.title,
@@ -47,7 +49,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export async function generateStaticParams() {
-  const gallery = getAllGallery()
+  const gallery = await getGallery()
   return gallery.map((item) => ({
     id: item.id,
   }))
@@ -55,7 +57,7 @@ export async function generateStaticParams() {
 
 export default async function GalleryItemPage({ params }: Props) {
   const { id } = await params
-  const item = getGalleryItemById(id)
+  const item = await getGalleryItemByIdAsync(id)
 
   if (!item) {
     notFound()

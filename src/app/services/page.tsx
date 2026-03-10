@@ -1,12 +1,12 @@
 import Link from 'next/link'
-import { getAllServices } from '@/lib/data/services'
+import { getServices } from '@/lib/data/services'
 import { siteSettings } from '@/lib/data/site'
 import JsonLd from '@/components/shared/JsonLd'
 import { getBreadcrumbSchema } from '@/lib/seo/schemas'
 import ServicesList from '@/components/services/ServicesList'
 
-export default function ServicesPage() {
-  const services = getAllServices()
+export default async function ServicesPage() {
+  const services = await getServices()
 
   const breadcrumbs = [
     { name: 'Главная', url: '/' },
@@ -69,14 +69,14 @@ export default function ServicesPage() {
               name: 'Услуги салона красоты Спиридонова Nails',
               description: 'Полный список услуг: маникюр, педикюр, дизайн ногтей',
               numberOfItems: services.length,
-              itemListElement: services.map((service, index) => ({
+                itemListElement: services.map((service, index) => ({
                 '@type': 'ListItem',
                 position: index + 1,
                 item: {
                   '@type': 'Product',
                   name: service.name,
                   description: service.description,
-                  image: service.image ? `${siteSettings.url}${service.image}` : undefined,
+                  image: service.image ? (service.image.startsWith('http') ? service.image : `${siteSettings.url}${service.image}`) : undefined,
                   offers: {
                     '@type': 'Offer',
                     price: service.price,

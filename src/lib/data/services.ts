@@ -1,4 +1,7 @@
 import { Service } from '@/types'
+import { isStrapiEnabled, fetchStrapi, getStrapiUrl } from '@/lib/strapi/client'
+import type { StrapiServicesResponse } from '@/lib/strapi/map-services'
+import { mapStrapiServiceToService } from '@/lib/strapi/map-services'
 
 export const services: Service[] = [
   {
@@ -111,3 +114,36 @@ export const getAllServices = () => services
 
 export const getServiceBySlug = (slug: string) =>
   services.find(s => s.slug === slug)
+
+/** Данные из Strapi или статика. Использовать в Server Components. */
+export async function getServices(): Promise<Service[]> {
+  if (!isStrapiEnabled()) return services
+  try {
+    const res = await fetchStrapi<StrapiServicesResponse>('api/services', {
+      populate: 'image',
+      publicationState: 'live',
+    })
+    const baseUrl = getStrapiUrl()
+    return (res.data ?? []).map((doc) => mapStrapiServiceToService(doc, baseUrl))
+  } catch {
+    return services
+  }
+}
+
+/** Одна услуга по slug из Strapi или статики. */
+export async function getServiceBySlugAsync(slug: string): Promise<Service | undefined> {
+  if (!isStrapiEnabled()) return getServiceBySlug(slug)
+  try {
+    const res = await fetchStrapi<StrapiServicesResponse>('api/services', {
+      'filters[slug][$eq]': slug,
+      populate: 'image',
+      publicationState: 'live',
+    })
+    const list = res.data ?? []
+    const doc = list[0]
+    if (!doc) return getServiceBySlug(slug)
+    return mapStrapiServiceToService(doc, getStrapiUrl())
+  } catch {
+    return getServiceBySlug(slug)
+  }
+}
