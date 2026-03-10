@@ -1,7 +1,7 @@
 import { ContactInfo, SiteSettings } from '@/types'
 
 export const siteSettings: SiteSettings = {
-  name: 'Салон красоты Спиридонова Nails',
+  name: 'Студия Спиридонова Nails',
   shortName: 'Спиридонова Nails',
   url: 'https://salon-spiridonova-nails.ru',
   logo: '/images/logo.png',

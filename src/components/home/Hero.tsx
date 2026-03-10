@@ -41,7 +41,7 @@ export default function Hero() {
         {/* Фоновое изображение (можно заменить на видео) */}
         <Image
           src="/images/hero/hero-bg.jpg" // Добавь свое изображение
-          alt="Интерьер салона красоты"
+          alt="Интерьер студии"
           fill
           priority
           quality={90}
@@ -66,7 +66,7 @@ export default function Hero() {
 
           {/* Заголовок H1 (самый важный для SEO) */}
           <h1 className="text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold mb-6 leading-tight">
-            Салон красоты{' '}
+            Студия{' '}
             <span className="text-pink-400">{siteSettings.shortName}</span>
             <br />
             <span className="text-2xl md:text-3xl lg:text-4xl text-gray-200 font-light">
