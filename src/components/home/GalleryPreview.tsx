@@ -77,18 +77,16 @@ export default function GalleryPreview({ gallery }: GalleryPreviewProps) {
           itemProp="imageGallery"
         >
           {filteredGallery.map((item, index) => (
-            <figure
+            <Link
               key={item.id}
-              className="relative group overflow-hidden rounded-xl" // ← Добавлен rounded-xl и overflow-hidden
-              itemProp="image"
+              href={`/gallery/${item.id}`}
+              className="relative group overflow-hidden rounded-xl block focus:outline-none focus:ring-2 focus:ring-pink-500 focus:ring-offset-2"
               itemScope
               itemType="https://schema.org/ImageObject"
-              onClick={() => {
-                console.log('Open image:', item.id);
-              }}
             >
               {/* Карточка с изображением */}
-              <Card padding="none" className="aspect-square overflow-hidden">
+              <figure className="h-full">
+                <Card padding="none" className="aspect-square overflow-hidden">
                 <Image
                   src={item.imageUrl}
                   alt={item.title}
@@ -100,6 +98,7 @@ export default function GalleryPreview({ gallery }: GalleryPreviewProps) {
                   unoptimized={item.imageUrl.startsWith('http')}
                 />
               </Card>
+              </figure>
 
               {/* Оверлей при наведении */}
               <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-xl" />
@@ -117,7 +116,7 @@ export default function GalleryPreview({ gallery }: GalleryPreviewProps) {
               {/* Метаданные для SEO */}
               <meta itemProp="author" content={siteSettings.name} />
               <meta itemProp="datePublished" content="2024" />
-            </figure>
+            </Link>
           ))}
         </div>
 

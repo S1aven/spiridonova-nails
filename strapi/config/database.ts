@@ -2,10 +2,13 @@ import path from 'path';
 
 export default ({ env }: { env: any }) => {
   const client = env('DATABASE_CLIENT', 'sqlite');
+  const sqliteFilename = env('DATABASE_FILENAME', '.tmp/data.db');
   const connections: Record<string, unknown> = {
     sqlite: {
       connection: {
-        filename: path.join(__dirname, '..', env('DATABASE_FILENAME', '.tmp/data.db')),
+        filename: path.isAbsolute(sqliteFilename)
+          ? sqliteFilename
+          : path.join(process.cwd(), sqliteFilename),
       },
       useNullAsDefault: true,
     },

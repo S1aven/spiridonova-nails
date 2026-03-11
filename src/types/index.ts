@@ -6,7 +6,7 @@ export interface Service {
   longDescription?: string
   price: number
   oldPrice?: number
-  duration: number // minutes
+  duration: number // минуты
   category: 'manicure' | 'pedicure' | 'other'
   image?: string
   features?: string[]

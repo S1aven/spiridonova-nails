@@ -108,6 +108,7 @@ export default function GalleryPageClient({ gallery }: GalleryPageClientProps) {
                     className="object-cover transition-transform duration-300 group-hover:scale-110"
                     itemProp="contentUrl"
                     loading={index < 8 ? 'eager' : 'lazy'}
+                    unoptimized={item.imageUrl.startsWith('http')}
                   />
                 </Card>
                 <figcaption className="absolute bottom-0 left-0 right-0 p-4 text-white transform translate-y-2 group-hover:translate-y-0 transition-transform duration-300 opacity-0 group-hover:opacity-100 pointer-events-none z-10">

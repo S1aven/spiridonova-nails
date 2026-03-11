@@ -83,7 +83,7 @@ export async function POST(request: Request) {
     return NextResponse.json(
       {
         success: true,
-        message: 'Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.', // ← Русское сообщение
+        message: 'Заявка успешно отправлена! Мы свяжемся с вами в ближайшее время.', // Сообщение на русском для ответа
         data: { name, phone, date, time }
       },
       { status: 201 }
@@ -101,7 +101,7 @@ export async function POST(request: Request) {
     }
 
     return NextResponse.json(
-      { error: 'Внутренняя ошибка сервера. Пожалуйста, попробуйте позже.' }, // ← Русское сообщение
+      { error: 'Внутренняя ошибка сервера. Пожалуйста, попробуйте позже.' }, // Сообщение на русском для ответа
       { status: 500 }
     );
   }

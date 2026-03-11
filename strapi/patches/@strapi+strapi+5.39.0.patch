@@ -1,0 +1,22 @@
+diff --git a/node_modules/@strapi/strapi/dist/src/node/develop.js b/node_modules/@strapi/strapi/dist/src/node/develop.js
+index cb79b3c..19ec5a0 100644
+--- a/node_modules/@strapi/strapi/dist/src/node/develop.js
++++ b/node_modules/@strapi/strapi/dist/src/node/develop.js
+@@ -86,6 +86,17 @@ const develop = async ({ cwd, polling, logger, tsconfig, watchAdmin, buildAdmin,
+                     ignoreDiagnostics: true
+                 }
+             });
++            // Копируем content-types (schema.json) из src в dist, чтобы loadAPIs их нашёл
++            try {
++                const copyPath = path.join(cwd, 'scripts', 'copy-content-types.js');
++                if (require('node:fs').existsSync(copyPath)) {
++                    const distDirForCopy = path.resolve(cwd, tsconfig.config.options.outDir || 'dist');
++                    const copyContentTypes = require(copyPath);
++                    await copyContentTypes({ cwd, distDir: distDirForCopy });
++                }
++            } catch (e) {
++                // Игнорируем, если скрипт отсутствует или завершился с ошибкой
++            }
+         }
+         /**
+      * IF we're not watching the admin we're going to build it, this makes

@@ -13,6 +13,9 @@ export function isStrapiEnabled(): boolean {
 
 const defaultHeaders: RequestInit['headers'] = {
   'Content-Type': 'application/json',
+  ...(process.env.STRAPI_API_TOKEN && {
+    Authorization: `Bearer ${process.env.STRAPI_API_TOKEN}`,
+  }),
 };
 
 /**

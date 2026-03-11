@@ -21,7 +21,7 @@ async function copyContentTypes({ cwd, distDir }) {
     await fse.copy(contentTypesSrc, contentTypesDist, { overwrite: true });
   }
 
-  // config: копируем .json и папку env в dist/config
+  // Конфиг: копируем .json и папку env в dist/config
   const srcConfig = path.join(cwd, 'config');
   const distConfig = path.join(distDir, 'config');
   if (await fse.pathExists(srcConfig)) {

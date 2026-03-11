@@ -1,4 +1,4 @@
-// lib/data/gallery.ts
+// Модуль данных галереи
 import { GalleryItem } from '@/types';
 import { isStrapiEnabled, fetchStrapi, getStrapiUrl } from '@/lib/strapi/client';
 import type { StrapiGalleryResponse } from '@/lib/strapi/map-gallery';

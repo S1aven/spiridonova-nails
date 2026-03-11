@@ -1,4 +1,4 @@
-// components/home/Contacts.tsx
+// Компонент секции контактов на главной
 'use client';
 
 import { useState } from 'react';

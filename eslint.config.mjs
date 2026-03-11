@@ -5,9 +5,9 @@ import nextTs from "eslint-config-next/typescript";
 const eslintConfig = defineConfig([
   ...nextVitals,
   ...nextTs,
-  // Override default ignores of eslint-config-next.
+  // Переопределяем игнорируемые по умолчанию пути из eslint-config-next.
   globalIgnores([
-    // Default ignores of eslint-config-next:
+    // Игнорируемые по умолчанию в eslint-config-next:
     ".next/**",
     "out/**",
     "build/**",
